@@ -1,43 +1,41 @@
-# Secure RESTful Blog Engine API
+# ✍️ Secure RESTful Blog Engine API
 
-A high-performance backend REST API built with **FastAPI**, **PostgreSQL**, and **SQLAlchemy**. This project features user account management, secure JWT-based authentication, and a complete CRUD system for publishing and managing blog posts.
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54" alt="Python" />
+  <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens" alt="JWT" />
+  <img src="https://img.shields.io/badge/-Swagger-%23C0E800?style=for-the-badge&logo=swagger&logoColor=black" alt="Swagger" />
+</p>
 
----
-
-## 📸 Swagger UI Documentation
-
-Once the server is running, visit the interactive documentation at `http://localhost:8000/docs`.
-
-<!-- Place your Swagger UI screenshot at assets/swagger_ui.png to show it on GitHub -->
-![Swagger UI API Documentation](assets/swagger_ui.png)
-
----
-
-## 🛠️ Tech Stack
-
-- **Framework**: FastAPI (Asynchronous Python Web Framework)
-- **Database**: PostgreSQL
-- **ORM**: SQLAlchemy
-- **Security**: OAuth2 with JWT (JSON Web Tokens), Bcrypt Password Hashing (`passlib`)
-- **Validation**: Pydantic v2
-- **Server**: Uvicorn
+A production-grade, secure blogging engine API built with the asynchronous power of **FastAPI**, backed by a relational **PostgreSQL** database and mapped with **SQLAlchemy ORM**. This API features secure user flows with **JWT token authentication** and cryptographic **bcrypt password hashing**.
 
 ---
 
-## 🚀 Key Features
+## ⚡ Quick Showcase (Interactive Swagger UI Docs)
 
-1. **User Registration & Hashed Passwords**: Secure user registration utilizing the `bcrypt` hashing algorithm to encrypt clear-text passwords before storing them in the database.
-2. **JWT Authentication & Session Management**: Issues secure JSON Web Tokens (JWT) upon successful credentials validation, enabling stateless, token-based authorization.
-3. **Authentication-Guarded Routes**: Specific API endpoints require user authentication:
-   - **Protected Endpoints**: Creating a post (`POST /posts/`) and deleting a post (`DELETE /posts/{id}`) require a valid JWT Bearer token.
-   - **Public Endpoints**: Anyone can list posts (`GET /posts/`) or view a specific post (`GET /posts/{id}`).
-4. **Post CRUD Operations**: Supports complete creation, reading, updating, and deletion operations for user posts.
-5. **Interactive Swagger UI**: Automatic, interactive documentation for testing endpoints.
-6. **Database Session Lifecycle Management**: Implements yielding dependencies (`get_db`) to automatically handle opening and closing database connections cleanly.
+The API is fully self-documenting. Once up and running, navigate to `http://localhost:8000/docs` to test endpoints interactively.
+
+<p align="center">
+  <!-- Place your Swagger UI screenshot inside assets/swagger_ui.png to show it on GitHub -->
+  <img src="assets/swagger_ui.png" alt="Swagger UI API Documentation Screenshot" width="850" style="border-radius: 8px; border: 1px solid #ddd;" />
+</p>
 
 ---
 
-## 📂 Project Structure
+## 🎯 Core Features
+
+* 🛡️ **Cryptographic Security**: Clear-text passwords are never stored. Passwords are securely encrypted using `bcrypt` via the `passlib` context before insertion.
+* 🔑 **Stateless Auth (JWT)**: Secure user sign-up and authentication flows returning standards-compliant JSON Web Tokens (JWT) for subsequent authorized access.
+* 🚧 **Route Guards**:
+  * 🔓 **Public Access**: Anyone can fetch all posts (`GET /posts/`) or view a single post by ID (`GET /posts/{id}`).
+  * 🔒 **Protected Access**: Creating a post (`POST /posts/`) and deleting a post (`DELETE /posts/{id}`) require a valid JWT token in the Authorization Header.
+* 💾 **SQLAlchemy Database Engine**: Automatic connection pool management and transaction lifecycles wrapped in FastAPI yielding dependency injection.
+* 📝 **Dynamic Validation**: Standardized data serialization and deserialization using Pydantic schemas to validate JSON payloads.
+
+---
+
+## 📂 Architecture Map
 
 ```text
 ├── app/
@@ -51,50 +49,56 @@ Once the server is running, visit the interactive documentation at `http://local
 │   ├── oauth2.py            # JWT creation, decoding, and route guards
 │   ├── schemas.py           # Pydantic schemas for data validation
 │   └── utils.py             # Password hashing utility functions
-├── .gitignore               # Configured to exclude virtualenvs and build files
-├── requirements.txt         # Project dependencies list
+├── .gitignore               # Excludes virtual environments and build configurations
+├── requirements.txt         # Package dependencies list
 └── README.md                # Project documentation
 ```
 
 ---
 
-## 💻 Local Setup & Installation
+## 🔧 Installation & Setup
 
-### Prerequisite: Database Setup
-Make sure you have a **PostgreSQL** server running locally and create a database named `postgres`. 
-Modify the database URL inside `app/database.py` with your credentials:
+### 1. Database Creation
+Ensure a **PostgreSQL** database named `postgres` is running. Update your database connection string in `app/database.py`:
 ```python
 SQLALCHEMY_DATABASE_URL = "postgresql://<username>:<password>@localhost/<database_name>"
 ```
 
-### Installation Steps
+### 2. Project Boot-up
+Execute the following commands in your workspace terminal:
 
-1. **Clone the repository**:
-   ```bash
-   git clone <your-repository-url>
-   cd <project-folder-name>
-   ```
+```bash
+# Clone the repository
+git clone <your-repository-url>
+cd <project-folder-name>
 
-2. **Create and activate a virtual environment**:
-   ```bash
-   python -m venv venv
-   # On Windows:
-   venv\Scripts\activate
-   # On macOS/Linux:
-   source venv/bin/activate
-   ```
+# Setup a clean virtual environment
+python -m venv venv
 
-3. **Install the dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
+# Activate environment (Windows)
+venv\Scripts\activate
+# Activate environment (macOS/Linux)
+source venv/bin/activate
 
-4. **Start the local development server**:
-   ```bash
-   uvicorn app.main:app --reload
-   ```
+# Install dependencies
+pip install -r requirements.txt
 
-5. **Access the API & Interactive Docs**:
-   - Welcome Endpoint: `http://127.0.0.1:8000/`
-   - **Swagger UI Interactive Docs**: `http://127.0.0.1:8000/docs`
-   - ReDoc Alternative Docs: `http://127.0.0.1:8000/redoc`
+# Run development server
+uvicorn app.main:app --reload
+```
+
+---
+
+## 🔗 API Endpoint Matrix
+
+| Method | Endpoint | Description | Auth Required |
+| :--- | :--- | :--- | :---: |
+| **POST** | `/login` | Authenticate user & retrieve JWT access token | ❌ No |
+| **POST** | `/users/` | Create a new user profile | ❌ No |
+| **GET** | `/users/` | Get a list of all registered users | ❌ No |
+| **GET** | `/users/{id}` | Retrieve details of a specific user | ❌ No |
+| **GET** | `/posts/` | Retrieve a list of all blog posts | ❌ No |
+| **POST** | `/posts/` | Publish a new blog post | 🔒 **Yes** |
+| **GET** | `/posts/{id}` | Fetch a single blog post details | ❌ No |
+| **PUT** | `/posts/{id}` | Update post details | ❌ No |
+| **DELETE** | `/posts/{id}` | Remove a post permanently | 🔒 **Yes** |
