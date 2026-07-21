@@ -14,12 +14,8 @@ A production-grade, secure blogging engine API built with the asynchronous power
 
 ## ⚡ Quick Showcase (Interactive Swagger UI Docs)
 
-The API is fully self-documenting. Once up and running, navigate to `http://localhost:8000/docs` to test endpoints interactively.
+<img width="1118" height="802" alt="Screenshot 2026-07-21 220322" src="https://github.com/user-attachments/assets/8f881d76-2d26-4671-a515-a3eb4feab788" />
 
-<p align="center">
-  <!-- Place your Swagger UI screenshot inside assets/swagger_ui.png to show it on GitHub -->
-  <img src="assets/swagger_ui.png" alt="Swagger UI API Documentation Screenshot" width="850" style="border-radius: 8px; border: 1px solid #ddd;" />
-</p>
 
 ---
 
